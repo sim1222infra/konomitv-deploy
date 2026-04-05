@@ -1,0 +1,32 @@
+services:
+  konomitv:
+    image: ghcr.io/tsukumijima/konomitv:latest
+    restart: unless-stopped
+    volumes:
+      - ./config.yaml:/code/config.yaml
+      - ./server/data/:/code/server/data/
+      - ./server/logs/:/code/server/logs/
+      - ./data/:/host-rootfs/
+      - ./server.crt:/server.crt
+      - ./server.key:/server.key
+    devices:
+      - /dev/dri:/dev/dri
+    extra_hosts:
+      - "edcb-server:${EDCB_IP}"
+    ports:
+      - "9999:9999"
+    group_add:
+      - "105" # render group
+      - "44" # video group
+    networks:
+      - default
+      - cftunnel
+  tunnel:
+    image: cloudflare/cloudflared@sha256:404528c1cd63c3eb882c257ae524919e4376115e6fe57befca8d603656a91a4c
+    restart: always
+    networks:
+      - cftunnel
+    command: tunnel run --token ${TUNNEL_TOKEN}
+networks:
+  cftunnel:
+    enable_ipv6: true

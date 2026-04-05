@@ -1,0 +1,6 @@
+/data/
+/server/
+server.crt
+server.key
+.env
+config.yaml
