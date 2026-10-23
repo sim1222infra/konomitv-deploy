@@ -1,6 +1,6 @@
 services:
   konomitv:
-    image: ghcr.io/tsukumijima/konomitv:latest@sha256:060676f6f9927ae3fae5c90d654f03b908c12bfcf086400c877027de4cbf25de
+    image: ghcr.io/tsukumijima/konomitv:latest@sha256:077ce325b5e69bb6f77e1954133f13433c2c6c49c95f97106b58ca53dd033c1d
     restart: unless-stopped
     volumes:
       - ./config.yaml:/code/config.yaml
